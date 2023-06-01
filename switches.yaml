@@ -1,4 +1,0 @@
-switch:
-  - platform: wake_on_lan
-    mac: a4:bb:6d:76:6a:36
-    name: "Gaming-PC"
