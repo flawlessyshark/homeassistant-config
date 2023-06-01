@@ -1,0 +1,22 @@
+# sensors for teams scores
+template:
+  - sensor:
+      - name: "Da Chicago Bears Score"
+        state: >-
+          {{state_attr('sensor.da_bears','team_score')}}
+  - sensor:
+      - name: "Da Carolina Panthers Score"
+        state: >-        
+          {{state_attr('sensor.da_panthers','team_score')}}
+  - sensor:
+      - name: "Da Carolina Panthers Opponents Score"
+        state: >-        
+          {{state_attr('sensor.da_panthers','opponent_score')}}
+  - sensor:
+      - name: "Da Chargers Score"
+        state: >-        
+          {{state_attr('sensor.da_chargers','team_score')}}
+  - sensor:
+      - name: "Da Chargers Opponents Score"
+        state: >-        
+          {{state_attr('sensor.da_chargers','opponent_score')}}          

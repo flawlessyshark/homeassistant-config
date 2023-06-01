@@ -1,0 +1,62 @@
+
+#system-monitor
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /config
+      - type: disk_use
+      - type: disk_free    
+      - type: memory_free
+      - type: memory_use_percent
+      - type: memory_use
+      - type: swap_use_percent
+      - type: swap_use
+      - type: swap_free
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+      - type: network_in
+        arg: eth0
+      - type: network_out
+        arg: eth0
+      - type: throughput_network_in
+        arg: eth0
+      - type: throughput_network_out
+        arg: eth0
+      - type: packets_in
+        arg: eth0
+      - type: packets_out
+        arg: eth0
+      - type: ipv4_address
+        arg: eth0
+      - type: processor_use
+      - type: processor_temperature
+      - type: last_boot
+# tautulli
+  - platform: tautulli
+    api_key: !secret tautulli_api
+    host: 10.0.50.150
+# Sensor converting
+  - platform: template
+    sensors:
+      lightning_distance:
+        friendly_name: 'lightning distance'
+        unit_of_measurement: "mi"
+        value_template: >-
+          {{ (states('sensor.blitzortung_lightning_distance') | float / 1.609) | round(0) }}    
+# bus distance  
+  - platform: template
+    sensors:
+      bus_distance:
+        friendly_name: 'Bus distance'
+        unit_of_measurement: "minutes"
+        value_template: >-
+          The Bus is {{ states('sensor.wtb')}} {{ state_attr('sensor.wtb' , 'time')}} away
+# One entry for each beacon you want to track
+  - platform: mqtt_room
+    device_id: "iBeacon:c7845981-0855-49fa-ae22-1d95fd318050-100-1"
+    name: 'Nates Android Phone Presense'
+    state_topic: 'espresense/devices/iBeacon:c7845981-0855-49fa-ae22-1d95fd318050-100-1'
+    timeout: 5
+    away_timeout: 10
